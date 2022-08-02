@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -12,21 +11,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import SendIcon from '@mui/icons-material/Send';
 import {ThemeProvider} from '@mui/material/styles';
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Alert,
-    ButtonGroup,
-    LinearProgress,
-    MenuItem,
-    Paper,
-    useTheme
-} from '@mui/material';
+import {Accordion, AccordionDetails, AccordionSummary, Alert, ButtonGroup, LinearProgress, MenuItem, Paper, useTheme} from '@mui/material';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+// The council list
 const councilList = [
-    "--",
     "Ashburton District Council",
     "Auckland Council",
     "Buller District Council",
@@ -97,20 +86,26 @@ const councilList = [
 ]
 
 export default function SubmissionForm() {
+
     const theme = useTheme();
-    const [errorFlag, setErrorFlag] = React.useState(false)
-    const [errorMessage, setErrorMessage] = React.useState("")
-    const [openPreview, setOpenPreview] = React.useState(false)
-    const [council, setCouncil] = React.useState("Auckland Council")
-    const [otherComments, setOtherComments] = React.useState("")
+
+    const [errorFlag, setErrorFlag] = React.useState(false)  // When the error flag is set to true, an error alert will appear.
+    const [errorMessage, setErrorMessage] = React.useState("")  // This is the error message, to be displayed in the error alert.
+
+    const [preview, setPreview] = React.useState(false)  // True to make the "Preview" tab (Step 2) visible to allow user to preview submission.
+
+    const [council, setCouncil] = React.useState("Auckland Council")  // The default choice for the dropdown box.
+
+    const [otherComments, setOtherComments] = React.useState("")  // If the user has other comments in the "Preview" tab, as it's not a form.
 
     const [submitterData, setSubmitterData] = React.useState<submitter>({
         firstName: "",
         lastName: "",
         email: "",
         council: ""
-    })
+    })  // submitter is a custom data type. Before the Step 1 contact information form is submitted, these are the default values.
 
+    // Below contains the body of the submission. It is an array of JSON objects. Each object has a heading, a body, and an onChange function.
     const reasons = [
         {
             heading: "The water entities are bureaucratic and unaccountable",
@@ -215,7 +210,7 @@ export default function SubmissionForm() {
 
     const [displayData, setDisplayData] = React.useState<Array<reasonData>>(reasons)
 
-    const makeDisplayData = () => {
+    const dynamicDisplay = () => {
         let displayData = []
         if (reason1) {
             displayData.push(reasons[0])
@@ -263,8 +258,8 @@ export default function SubmissionForm() {
     }
 
     React.useEffect(() => {
-        makeDisplayData()
-    }, [openPreview, reason1, reason2, reason3, reason4, reason5, reason6])
+        dynamicDisplay()
+    }, [preview, reason1, reason2, reason3, reason4, reason5, reason6])
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -283,7 +278,7 @@ export default function SubmissionForm() {
                 email: email.toString(),
                 council: council
             })
-            setOpenPreview(true)
+            setPreview(true)
             window.scrollTo(0, 0)
         } else {
             setErrorFlag(true)
@@ -292,7 +287,7 @@ export default function SubmissionForm() {
     };
 
     const goBack = () => {
-        setOpenPreview(false)
+        setPreview(false)
     }
 
     const onChangeCouncil = (event: any) => {
@@ -377,7 +372,7 @@ export default function SubmissionForm() {
                     <Typography variant="h5" >Three Waters Express Submission</Typography>
                     <Typography variant={"h6"} sx={{mb: 3}}>By Lobby New Zealand</Typography>
 
-                    {!openPreview && !successful &&
+                    {!preview && !successful &&
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mb: 8 }}>
 
                             {errorFlag && <Alert severity="error" sx={{mt: 2, mb: 3}}>{errorMessage}</Alert>}
@@ -429,7 +424,7 @@ export default function SubmissionForm() {
 
             <Container component="main" maxWidth="sm">
 
-                {openPreview && !successful && <>
+                {preview && !successful && <>
                     {errorFlag && <Alert severity="error" sx={{mt: 2, mb: 3}}>{errorMessage}</Alert>}
 
                     <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'left', mb: 30}}>

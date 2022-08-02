@@ -25,9 +25,16 @@ chrome_options.add_experimental_option('useAutomationExtension', False)
 
 
 @app.route('/')
-def hello_world():
-    """Basic API call"""
-    return 'The ThreeWai API is running. To get started, send a POST request to /hello. Then track your request at /tasks/task_id as returned'
+def test():
+    """GET / returns this text. The purpose is the test that the API is deployed correctly."""
+    return 'The API is running. To get started, POST /submit, which will return a task ID. To track the status of that task, GET /tasks/<task_id>.'
+
+
+@app.route('/submit', methods=["POST"])
+def submit():
+    task = celery.send_task('celery_worker.scrape', args=[request.get_json(force=True)])
+    response = check_task(task.id)
+    return response
 
 
 @app.route('/tasks/<task_id>')
@@ -49,14 +56,6 @@ def check_task(task_id):
     }
 
     return jsonify(response)
-
-
-@app.route('/hello', methods=["POST"])
-def hello():
-    task = celery.send_task('celery_worker.test', args=[request.get_json(force=True)])
-    response = check_task(task.id)
-    return response
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)

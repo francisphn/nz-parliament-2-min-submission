@@ -25,7 +25,7 @@ chrome_options.add_experimental_option('useAutomationExtension', False)
 
 
 @celery.task(name='celery_worker.test', bind=True)
-def test(self, data):
+def scrape(self, data):
     """The actual scrape engine"""
 
     self.update_state(state="Submission data has been received!")
