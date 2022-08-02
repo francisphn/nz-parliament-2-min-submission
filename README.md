@@ -1,0 +1,2 @@
+# nz-parliament-express-submission
+NZ Parliament Express Submission is a great tool for public engagement if you run a campaign on a particular Bill of Parliament. The idea is to allow your supporters to submit a Parliamentary submission on a Bill (which is at Committee stage) in less than two minutes, like signing a petition, because you have already supplied the content of the submission. Yep, and it also runs on your own website. All they need to do is to key in their contact information and click send to submit on a Bill.
