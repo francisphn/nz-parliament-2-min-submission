@@ -11,6 +11,7 @@ broker = os.environ['REDIS_URL']
 backend = os.environ['REDIS_URL']
 name = os.environ.get('CELERY_NAME', 'default_name')
 
+submissionUrl = 'https://www.parliament.nz/en/ECommitteeSubmission/53SCFE_SCF_BILL_124081/CreateSubmission'
 
 celery = Celery(name, broker=broker, backend=backend)
 
@@ -54,7 +55,7 @@ def scrape(self, data):
         print(user_agent)
         chrome_options.add_argument(f'user-agent={user_agent}')
         driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-        driver.get('https://www.parliament.nz/en/ECommitteeSubmission/53SCFE_SCF_BILL_124081/CreateSubmission')
+        driver.get(submissionUrl)
         time.sleep(random.randint(20, 30))
     except:
         return "Error"  # Error
