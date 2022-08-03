@@ -8,7 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
-export default function Faq() {
+export default function FAQ() {
 
     return (
         <ThemeProvider theme={theme}>

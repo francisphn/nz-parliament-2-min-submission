@@ -1,19 +1,25 @@
 import React from 'react';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import './App.css';
-import Form from "./components/Form"
-import Donate from "./components/Donate"
-import Faq from "./components/Faq"
+import Form from "./pages/Form"
+import FAQ from "./pages/FAQ"
+import Header from "./components/Header";
+import Preview from "./pages/Preview";
+import PostSubmission from "./pages/PostSubmission";
 
 function App() {
   return (
-      <Router>
-        <Routes>
-          <Route path="" element={<Form/>}/>
-            <Route path="/donate" element={<Donate/>}/>
-            <Route path="/faq" element={<Faq/>}/>
-        </Routes>
-      </Router>
+      <>
+          <Header/>
+          <Router>
+              <Routes>
+                  <Route path={""} element={<Form/>}/>
+                  <Route path={"/preview"} element={<Preview/>}/>
+                  <Route path={"/submitted"} element={<PostSubmission/>}/>
+                  <Route path={"/faq"} element={<FAQ/>}/>
+              </Routes>
+          </Router>
+      </>
   );
 }
 
