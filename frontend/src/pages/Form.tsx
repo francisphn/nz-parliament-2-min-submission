@@ -48,7 +48,7 @@ const Form = () => {
 
                 <Typography component="h1" variant="body1" sx={{mt: 2}}>
                     Use this tool to quickly generate and submit a Parliamentary
-                    submission against the Water Services Entities Bill which is the basis of the Three Waters Reform Programme. <Link href={"/faq"}>How does this tool work?</Link>
+                    submission against the Water Services Entities Bill which is the basis of the Three Waters Reform Programme.
                 </Typography>
 
                 <Typography component="h1" variant="body1" sx={{mt: 2}}>
